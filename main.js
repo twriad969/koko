@@ -89,7 +89,7 @@ bot.on('callback_query', (callbackQuery) => {
     redirect_url: process.env.REPLIT_URL + '/payment-complete',
     return_type: 'GET',
     cancel_url: process.env.REPLIT_URL + '/payment-cancel',
-    webhook_url: process.env.REPLIT_URL + '/webhook'
+    webhook_url: process.env.REPLIT_URL + '/payment-complete'
   };
 
   const options = {
