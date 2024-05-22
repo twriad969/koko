@@ -14,11 +14,11 @@ const downloadDir = path.join(__dirname, 'downloads');
 const outputDir = path.join(__dirname, 'outputs');
 
 // Ensure the download and output directories exist
-if (!fs.existsSync(downloadDir)){
+if (!fs.existsSync(downloadDir)) {
     fs.mkdirSync(downloadDir);
 }
 
-if (!fs.existsSync(outputDir)){
+if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir);
 }
 
@@ -53,7 +53,6 @@ bot.on('message', async (msg) => {
                     // Watermark the video
                     ffmpeg(videoPath)
                         .videoFilter("drawtext=text='Ronok':fontcolor=white:fontsize=24:x=10:y=10")
-                        .save(outputPath)
                         .on('progress', (progress) => {
                             if (progress.percent) {
                                 console.log(`Progress: ${Math.round(progress.percent)}%`);
@@ -77,7 +76,8 @@ bot.on('message', async (msg) => {
                         .on('error', (err) => {
                             console.error('Error processing video:', err);
                             bot.sendMessage(chatId, 'There was an error processing your video.');
-                        });
+                        })
+                        .save(outputPath);
                 })
                 .on('error', (err) => {
                     console.error('Error downloading video:', err);
