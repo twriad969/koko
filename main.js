@@ -1,12 +1,11 @@
-require('dotenv').config();
 const TelegramBot = require('node-telegram-bot-api');
 const ffmpeg = require('fluent-ffmpeg');
 const fs = require('fs');
 const axios = require('axios');
 const path = require('path');
 
-// Load the Telegram bot token from environment variables
-const token = process.env.TELEGRAM_BOT_TOKEN;
+// Your Telegram bot token
+const token = '6709247078:AAHp8UF5DWeUrjC9_Q8TUO2giHKUblifpR8';
 const bot = new TelegramBot(token, { polling: true });
 
 // Directories for downloads and outputs
