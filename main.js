@@ -47,8 +47,8 @@ bot.on('message', async (msg) => {
 
             bot.sendMessage(chatId, 'Watermarking video...');
 
-            const ffmpegProcess = ffmpeg(videoPath)
-                .outputOptions('-vf', "drawtext=text='Ronok':fontcolor=white:fontsize=24:x=10:y=10")
+            ffmpeg(videoPath)
+                .videoFilter("drawtext=text='Ronok':fontcolor=white:fontsize=24:x=10:y=10")
                 .save(outputPath)
                 .on('progress', (progress) => {
                     if (progress.percent) {
