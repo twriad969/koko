@@ -25,10 +25,13 @@ bot.on('message', async (msg) => {
     if (msg.video) {
         const chatId = msg.chat.id;
         const fileId = msg.video.file_id;
-        
+
+        // Inform user that the process has started
+        bot.sendMessage(chatId, 'Downloading and processing your video...');
+
         // Get the file path
         const fileUrl = await bot.getFileLink(fileId);
-        
+
         // Download the video
         const videoPath = path.join(downloadDir, `${fileId}.mp4`);
         const response = await axios({
@@ -36,15 +39,22 @@ bot.on('message', async (msg) => {
             method: 'GET',
             responseType: 'stream'
         });
-        
+
         response.data.pipe(fs.createWriteStream(videoPath))
         .on('finish', () => {
             // Watermark the video
             const outputPath = path.join(outputDir, `watermarked-${fileId}.mp4`);
-            ffmpeg(videoPath)
-                .input('path/to/watermark.png')  // replace with the actual path to your watermark image
-                .complexFilter('[0:v][1:v] overlay=10:10')
+
+            bot.sendMessage(chatId, 'Watermarking video...');
+
+            const ffmpegProcess = ffmpeg(videoPath)
+                .outputOptions('-vf', "drawtext=text='Ronok':fontcolor=white:fontsize=24:x=10:y=10")
                 .save(outputPath)
+                .on('progress', (progress) => {
+                    if (progress.percent) {
+                        bot.sendMessage(chatId, `Progress: ${Math.round(progress.percent)}%`);
+                    }
+                })
                 .on('end', () => {
                     // Send the watermarked video back to the user
                     bot.sendVideo(chatId, outputPath)
@@ -53,6 +63,8 @@ bot.on('message', async (msg) => {
                         fs.unlinkSync(videoPath);
                         fs.unlinkSync(outputPath);
                     });
+
+                    bot.sendMessage(chatId, 'Video processing complete.');
                 })
                 .on('error', (err) => {
                     console.error('Error processing video: ', err);
