@@ -3,23 +3,15 @@ const ffmpeg = require('fluent-ffmpeg');
 const fs = require('fs');
 const axios = require('axios');
 const path = require('path');
+const os = require('os');
 
 // Your Telegram bot token
 const token = '6709247078:AAHp8UF5DWeUrjC9_Q8TUO2giHKUblifpR8';
 const bot = new TelegramBot(token, { polling: true });
 
-// Directories for downloads and outputs
-const downloadDir = path.join(__dirname, 'downloads');
-const outputDir = path.join(__dirname, 'outputs');
-
-// Ensure the download and output directories exist
-if (!fs.existsSync(downloadDir)) {
-    fs.mkdirSync(downloadDir);
-}
-
-if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir);
-}
+// Directories for downloads and outputs using os.tmpdir()
+const downloadDir = os.tmpdir();
+const outputDir = os.tmpdir();
 
 bot.on('message', async (msg) => {
     if (msg.video) {
