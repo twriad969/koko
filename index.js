@@ -15,7 +15,7 @@ let stats = {
     linksProcessed: 0
 };
 let currentAPI = {
-    key: '1166d17c61fcc77480e3778ee44627b1f1ffbcb0',
+    key: 'c0c3fb3216826b7e107e17b161c06f7fd2c7fe78',
     name: 'ronok'
 };
 const requiredChannel = '@terabox_video_down';
