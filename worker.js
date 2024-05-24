@@ -17,7 +17,7 @@ function saveStatsToAPI(stats) {
 
 // Function to rotate API keys every 24 hours
 function rotateAPI(currentAPI) {
-    const newAPI = currentAPI.key === 'c0c3fb3216826b7e107e17b161c06f7fd2c7fe78'
+    const newAPI = currentAPI.key === 'fd0f68b969f0b61e5f274f9a389d3df82faec11e'
         ? { key: 'fd0f68b969f0b61e5f274f9a389d3df82faec11e', name: 'kartik' }
         : { key: 'c0c3fb3216826b7e107e17b161c06f7fd2c7fe78', name: 'ronok' };
     console.log(`API rotated to: ${newAPI.name}`);
