@@ -178,7 +178,7 @@ async function generateVerificationLink(userId, currentAPI, verificationCodes) {
     const uniqueCode = generateUniqueCode();
     verificationCodes[uniqueCode] = userId;
     const verifyUrl = `https://telegram.me/save_res_robot?start=${uniqueCode}`;
-    const shortenResponse = await axios.get(`https://publicearn.com/api?api==${currentAPI.key}&url=${encodeURIComponent(verifyUrl)}`);
+    const shortenResponse = await axios.get(`https://publicearn.com/api?api=${currentAPI.key}&url=${encodeURIComponent(verifyUrl)}`);
     const shortUrl = shortenResponse.data.shortenedUrl;
     return shortUrl;
 }
